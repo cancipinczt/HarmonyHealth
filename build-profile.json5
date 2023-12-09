@@ -1,0 +1,56 @@
+/*
+ * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\czt\\.ohos\\config\\auto_debug_HealthyDiet_com.example.healthydiet_2850086000495291970.cer",
+          "storePassword": "0000001A6374D37D7EED923ECE20C8EB932A2A3C93778F9C09D33B4430C5F30E8A86AFD290394B0E6004",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001AA04D9F515FC0583BC0545DB0B0F32D19035AB25EF2016CBD40644B5ACE22B702A20DB522C180",
+          "profile": "C:\\Users\\czt\\.ohos\\config\\auto_debug_HealthyDiet_com.example.healthydiet_2850086000495291970.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\czt\\.ohos\\config\\auto_debug_HealthyDiet_com.example.healthydiet_2850086000495291970.p12"
+        }
+      }
+    ],
+    "compileSdkVersion": 9,
+    "compatibleSdkVersion": 9,
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
