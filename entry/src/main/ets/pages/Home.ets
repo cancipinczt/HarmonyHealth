@@ -16,313 +16,11 @@
 import router from '@ohos.router'
 import curves from '@ohos.curves'
 import { BreakpointSystem, BreakPointType } from '../common/BreakpointSystem'
-import { FoodInfo, Category } from '../model/DataModels'
-import { getFoods, getFoodCategories, getSortedFoodData } from '../model/DataUtil'
-import { Records } from './components/DietRecord'
-
-interface FoodId {
-  foodId: FoodInfo;
-}
-
-@Component
-struct FoodListItem {
-  private foodItem?: FoodInfo
-
-  build() {
-    Navigator({ target: 'pages/FoodDetail' }) {
-      Row() {
-        Image(this.foodItem!.image!)
-          .objectFit(ImageFit.Contain)
-          .autoResize(false)
-          .height(40)
-          .width(40)
-          .backgroundColor('#FFf1f3f5')
-          .margin({ right: 16 })
-          .borderRadius(6)
-          .sharedTransition(this.foodItem!.letter, {
-            duration: 400,
-            curve: curves.cubicBezier(0.2, 0.2, 0.1, 1.0),
-            delay: 100
-          })
-        Text(this.foodItem?.name)
-          .fontSize(14)
-        Blank()
-        Text($r('app.string.calorie_with_kcal_unit', this.foodItem?.calories.toString()))
-          .fontSize(14)
-      }
-      .height(64)
-      .width('100%')
-    }
-    .params({ foodId: this.foodItem } as FoodId)
-    .margin({ right: 24, left: 32 })
-  }
-}
-
-@Component
-struct ListModeFoods {
-  private foodItems: Array<FoodInfo | string> = getSortedFoodData()
-
-  build() {
-    Column() {
-      Text($r("app.string.title_food_list"))
-        .width('100%')
-        .height(56)
-        .padding({ left: 20 })
-        .backgroundColor('#FF1f3f5')
-        .fontSize(20)
-
-      List() {
-        ForEach(this.foodItems, (item: FoodInfo) => {
-          ListItem() {
-            if (item.letter !== undefined) {
-              FoodListItem({ foodItem: item })
-            } else {
-              if (typeof (item) === 'string') {
-                Text(item)
-                  .fontSize(14)
-                  .height(48)
-                  .margin({ left: 24 })
-                  .width('100%')
-              }
-            }
-          }
-        })
-      }
-      .layoutWeight(1)
-    }
-  }
-}
-
-@Component
-struct FoodGridItem {
-  private foodItem?: FoodInfo
-
-  build() {
-    Column() {
-      Image(this.foodItem!.image!)
-        .objectFit(ImageFit.Contain)
-        .backgroundColor('#f1f3f5')
-        .width('100%')
-        .height(152)
-        .sharedTransition(this.foodItem!.letter, {
-          duration: 400,
-          curve: curves.cubicBezier(0.2, 0.2, 0.1, 1.0),
-          delay: 100
-        })
-      Row() {
-        Text(this.foodItem?.name)
-          .fontSize(14)
-        Blank()
-        Text($r('app.string.calorie_with_kcal_unit', this.foodItem?.calories.toString()))
-          .fontSize(14)
-          .fontColor(0x99000000)
-      }
-      .padding({ left: 12, right: 12 })
-      .width('100%')
-      .height(32)
-      .backgroundColor('#E5E5E5')
-    }
-    .height(184)
-    .clip(new Rect({ width: '100%', height: '100%', radius: 12 }))
-    .onClick(() => {
-      router.push({ url: 'pages/FoodDetail', params: { foodId: this.foodItem } })
-    })
-  }
-}
-
-@Component
-struct FoodGrid {
-  @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
-  private foodItems?: FoodInfo[]
-
-  build() {
-    Grid() {
-      ForEach(this.foodItems!, (item: FoodInfo) => {
-        GridItem() {
-          FoodGridItem({ foodItem: item })
-        }
-      })
-
-    }
-    .columnsTemplate(new BreakPointType({
-      sm: '1fr 1fr',
-      md: '1fr 1fr 1fr',
-      lg: '1fr 1fr 1fr 1fr'
-    }).getValue(this.currentBreakpoint) as string)
-    .columnsGap(8)
-    .rowsGap(8)
-    .padding({ left: 16, right: 16 })
-  }
-}
-
-@Component
-struct CategoryModeFoods {
-  @State currentTabIndex: number = 0
-  private foodItems: FoodInfo[] = getFoods()
-  private foodCategories: Category[] = getFoodCategories()
-
-  @Builder
-  tabBarItemBuilder(value: Resource, index: number) {
-    Text(value)
-      .fontColor(this.currentTabIndex === index ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.6)')
-      .fontSize(this.currentTabIndex === index ? 24 : 18)
-      .margin({ top: 2, left: 10, right: 10 })
-      .height(56)
-  }
-
-  build() {
-    Column() {
-      Text("饮食")
-        .fontSize(26)
-        .padding({ left: 26, top: 12 })
-
-      TextInput({placeholder: "请输入食物名称"})
-      .type(InputType.Normal)
-      .backgroundColor("#EFEFEF")
-      .margin({top: 10, left: 30, right: 30, bottom: 10})
-
-      Tabs({ barPosition: BarPosition.Start }) {
-        TabContent() {
-          FoodGrid({ foodItems: this.foodItems })
-        }
-        .tabBar(this.tabBarItemBuilder($r('app.string.category_all'), 0))
-
-        ForEach(this.foodCategories, (foodCategory: Category, index?: number) => {
-          TabContent() {
-            FoodGrid({ foodItems: this.foodItems.filter(item => (item.categoryId === foodCategory.id)) })
-          }
-          .tabBar(this.tabBarItemBuilder(foodCategory.name!, index! + 1))
-        })
-      }
-      .animationDuration(0)
-      .onChange((index) => {
-        this.currentTabIndex = index
-      })
-      .barMode(BarMode.Scrollable)
-      .barWidth("20%")
-      .vertical(true)
-      .margin({bottom: "30%"})
-      .borderRadius(20)
-
-    }
-    .backgroundColor("#B8FFBC")
-
-    // .margin({right: 40})
-  }
-}
-
-@Component
-struct FoodsDisplay {
-  @State isCategoryMode: boolean = true
-
-  build() {
-    Stack({ alignContent: Alignment.TopEnd }) {
-      if (this.isCategoryMode) {
-        // ListModeFoods()
-        CategoryModeFoods()
-      }
-
-
-      // else {
-      //
-      // }
-      // Row() {
-      //   Image($r("app.media.ic_switch"))
-      //     .height(24)
-      //     .width(24)
-      //     .margin({ left: 24, right: 24 })
-      // }
-      // .height(56)
-      // .backgroundColor(this.isCategoryMode ? Color.White : '#F1F3F5')
-      // .onClick(() => {
-      //   this.isCategoryMode = !this.isCategoryMode
-      // })
-    }
-  }
-}
-
-@Component
-struct SportsDisplay {
-
-  @State currentTabIndex: number = 0
-
-  @Builder
-  tabBarItemBuilder(value: string, index: number) {
-    Text(value)
-      .fontColor(this.currentTabIndex === index ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.6)')
-      .fontSize(this.currentTabIndex === index ? 24 : 18)
-      .margin({ top: 2, left: 10, right: 10 })
-      .height(56)
-  }
-
-  build() {
-    Column() {
-
-      Text("运动")
-        .fontSize(26)
-        .padding({ left: 26, top: 12 })
-
-      TextInput({placeholder: "请输入运动名称"})
-        .type(InputType.Normal)
-        .backgroundColor("#EFEFEF")
-        .margin({top: 10, left: 30, right: 30, bottom: 10})
-
-      Tabs() {
-        TabContent() {
-          Text("走路")
-        }
-        .tabBar(this.tabBarItemBuilder("走路", 0))
-
-        TabContent() {
-          Text("跑步")
-        }
-        .tabBar(this.tabBarItemBuilder("跑步", 1))
-
-        TabContent() {
-          Text("骑行")
-        }
-        .tabBar(this.tabBarItemBuilder("骑行", 2))
-
-        TabContent() {
-          Text("有氧操")
-        }
-        .tabBar(this.tabBarItemBuilder("有氧操", 3))
-
-        TabContent() {
-          Text("舞蹈瑜伽")
-        }
-        .tabBar(this.tabBarItemBuilder("舞蹈瑜伽", 4))
-
-        TabContent() {
-          Text("游泳")
-        }
-        .tabBar(this.tabBarItemBuilder("游泳", 5))
-
-        TabContent() {
-          Text("打球")
-        }
-        .tabBar(this.tabBarItemBuilder("打球", 6))
-
-        TabContent() {
-          Text("力量")
-        }
-        .tabBar(this.tabBarItemBuilder("力量", 7))
-      }
-      .animationDuration(0)
-      .onChange((index) => {
-        this.currentTabIndex = index
-      })
-      .barMode(BarMode.Scrollable)
-      .barWidth("20%")
-      .vertical(true)
-      .margin({bottom: "30%"})
-      .borderRadius(20)
-    }
-    .backgroundColor("#B8FFBC")
-  }
-}
-
-
+import { HomePage } from './home/HomePage'
+import { UserPage } from './user/UserPage'
+import { SportPage } from './sport/SportPage'
+import { FoodPage } from './food/FoodPage'
+import { CommunityPage } from './community/CommunityPage'
 
 
 @Entry
@@ -331,6 +29,7 @@ struct Home {
   @State currentTabIndex: number = 0
   @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
   private breakpointSystem: BreakpointSystem = new BreakpointSystem()
+  @State refresh: boolean = true
 
   @Builder
   bottomBarItemBuilder(name: Resource, icon: Resource, index: number) {
@@ -367,6 +66,8 @@ struct Home {
   }
 
   build() {
+
+
     Tabs({
       barPosition: new BreakPointType({
         sm: BarPosition.End,
@@ -375,29 +76,40 @@ struct Home {
       }).getValue(this.currentBreakpoint)
     }) {
       TabContent() {
-        Records()
-      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_record"), $r("app.media.ic_bottom_record"), 0))
+        if (this.refresh) {
+          HomePage()
+        } else {
+          HomePage()
+        }
+      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_home"), $r("app.media.ic_bottom_home"), 0))
 
       TabContent() {
-        FoodsDisplay()
-      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_diet"), $r("app.media.ic_bottom_diet"), 1))
+        CommunityPage()
+      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_community"), $r("app.media.ic_bottom_diet"), 1))
 
       TabContent() {
-        SportsDisplay()
-      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_sport"), $r("app.media.ic_bottom_sport"), 2))
+        FoodPage()
+      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_diet"), $r("app.media.ic_bottom_diet"), 2))
 
       TabContent() {
-        Text("用户界面")
-      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_user"), $r("app.media.ic_bottom_user"), 3))
+        SportPage()
+      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_sport"), $r("app.media.ic_bottom_sport"), 3))
+
+      TabContent() {
+        UserPage()
+      }.tabBar(this.bottomBarItemBuilder($r("app.string.tab_bar_user"), $r("app.media.ic_bottom_user"), 4))
+
 
     }
     .vertical(new BreakPointType({ sm: false, md: false, lg: true }).getValue(this.currentBreakpoint) as boolean)
     .barWidth(new BreakPointType({ sm: '100%', md: '100%', lg: '56vp' }).getValue(this.currentBreakpoint) as string)
-    .barHeight(new BreakPointType({ sm: '56vp', md: '56vp', lg: '60%' }).getValue(this.currentBreakpoint) as string)
+    .barHeight(new BreakPointType({ sm: '10%', md: '10%', lg: '60%' }).getValue(this.currentBreakpoint) as string)
     .animationDuration(0)
     .onChange((index) => {
+      this.refresh = !this.refresh
       this.currentTabIndex = index
     })
+    .backgroundColor("#B8FFBC")
   }
 
   private getTabBarColor(index: number) {

@@ -2,7 +2,19 @@
   "src": [
     "pages/Logo",
     "pages/Home",
-    "pages/FoodDetail",
-    "pages/components/DietRecord"
+    "pages/sport/SportSearch",
+    "pages/food/FoodSearch",
+    "pages/user/UserHome",
+    "pages/user/UserInfoEdit",
+    "pages/community/CommunityPage",
+    "pages/user/UserNameEdit",
+    "pages/user/UserSignatureEdit",
+    "pages/Login",
+    "pages/record/RecordPage",
+    "pages/Register",
+    "pages/user/userFeature/aiAssistant",
+    "pages/HttpTest",
+    "pages/user/userInfo/userWeightPage",
+    "pages/user/UserPhoneEdit"
   ]
 }

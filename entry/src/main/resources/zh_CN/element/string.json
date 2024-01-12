@@ -29,8 +29,16 @@
       "value": "无记录，请返回首页添加."
     },
     {
+      "name": "tab_bar_home",
+      "value": "首页"
+    },
+    {
       "name": "tab_bar_record",
       "value": "记录"
+    },
+    {
+      "name": "tab_bar_community",
+      "value": "社区"
     },
     {
       "name": "tab_bar_diet",
@@ -69,6 +77,42 @@
       "name": "category_dessert",
       "value": "甜点"
     },
+
+    {
+      "name": "category_walk",
+      "value": "行走"
+    },
+    {
+      "name": "category_run",
+      "value": "跑步"
+    },
+    {
+      "name": "category_ride",
+      "value": "骑行"
+    },
+    {
+      "name": "category_aerobics",
+      "value": "有氧操"
+    },
+    {
+      "name": "category_danceyoga",
+      "value": "舞蹈瑜伽"
+    },
+    {
+      "name": "category_swim",
+      "value": "游泳"
+    },
+    {
+      "name": "category_ballgame",
+      "value": "打球"
+    },
+    {
+      "name": "category_strength",
+      "value": "力量训练"
+    },
+
+
+
     {
       "name": "diet_record_calorie",
       "value": "热量"
@@ -193,6 +237,50 @@
       "name": "food_name_strawberry",
       "value": "草莓"
     },
+
+
+    {
+      "name": "sport_name_walk",
+      "value": "散步"
+    },
+    {
+      "name": "sport_name_run_slow",
+      "value": "跑步（慢）"
+    },
+    {
+      "name": "sport_name_run_fast",
+      "value": "跑步（快）"
+    },
+    {
+      "name": "sport_name_ride_lower_intensity",
+      "value": "动感单车较低强度"
+    },
+    {
+      "name": "sport_name_ride_low_intensity",
+      "value": "动感单车低强度"
+    },
+    {
+      "name": "sport_name_calisthenics",
+      "value": "健美操"
+    },
+    {
+      "name": "sport_name_square_dance",
+      "value": "广场舞"
+    },
+    {
+      "name": "sport_name_swim",
+      "value": "游泳"
+    },
+    {
+      "name": "sport_name_bowling",
+      "value": "保龄球"
+    },
+    {
+      "name": "sport_name_dumbbell_flat_bird",
+      "value": "哑铃平底飞鸟"
+    },
+
+
     {
       "name": "unit_weight",
       "value": "每100克"

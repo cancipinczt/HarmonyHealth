@@ -15,7 +15,21 @@
 
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\Admin\\.ohos\\config\\auto_debug_HarmonyHealth_com.example.healthydiet_30086000717781673.cer",
+          "storePassword": "0000001B401F749BC839F17B889FA0313471A0950D2BCBD4A8EB799D425EEC67ADEE58A57A806A3CAE53A0",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B3D6C4AF09FCEF029CB679D2B8EFA1D6CE760363542DDE3358746FCEB122825FC28B655A059A251",
+          "profile": "C:\\Users\\Admin\\.ohos\\config\\auto_debug_HarmonyHealth_com.example.healthydiet_30086000717781673.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Admin\\.ohos\\config\\auto_debug_HarmonyHealth_com.example.healthydiet_30086000717781673.p12"
+        }
+      }
+    ],
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [

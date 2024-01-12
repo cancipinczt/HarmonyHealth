@@ -54,7 +54,7 @@ struct Logo {
           delay: 100,
           onFinish: () => {
             setTimeout(() => {
-              router.replace({ url: 'pages/Home' })
+              router.replace({ url: 'pages/Login' })
             }, 1000)
           }
         }, () => {

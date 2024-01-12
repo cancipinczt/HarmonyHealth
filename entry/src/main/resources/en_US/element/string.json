@@ -60,6 +60,42 @@
       "name": "category_dessert",
       "value": "Dessert"
     },
+
+
+    {
+      "name": "category_walk",
+      "value": "散步"
+    },
+    {
+      "name": "category_run",
+      "value": "跑步"
+    },
+    {
+      "name": "category_ride",
+      "value": "骑行"
+    },
+    {
+      "name": "category_aerobics",
+      "value": "有氧操"
+    },
+    {
+      "name": "category_Danceyoga",
+      "value": "舞蹈瑜伽"
+    },
+    {
+      "name": "category_Swim",
+      "value": "游泳"
+    },
+    {
+      "name": "category_Ballgame",
+      "value": "打球"
+    },
+    {
+      "name": "category_Strength",
+      "value": "力量训练"
+    },
+
+
     {
       "name": "diet_record_calorie",
       "value": "Calories"
